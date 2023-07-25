@@ -1,11 +1,15 @@
 package cn.itcast.user.web;
 
 
+import cn.itcast.user.config.PatternProperties;
 import cn.itcast.user.pojo.User;
 import cn.itcast.user.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.*;
+import sun.util.resources.LocaleData;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -13,14 +17,17 @@ import java.time.format.DateTimeFormatter;
 @Slf4j
 @RestController
 @RequestMapping("/user")
-// @RefreshScope
+//@RefreshScope //nacos 的热更新
 public class UserController {
 
     @Autowired
     private UserService userService;
-
-    // @Value("${pattern.dateformat}")
-    // private String dateformat;
+    //读取nacos配置
+//     @Value("${pattern.dateformat}")
+//     private String dateformat;
+    //注入类文件
+    @Autowired
+    private PatternProperties properties;
 
 
 
@@ -36,4 +43,11 @@ public class UserController {
 
         return userService.queryById(id);
     }
+
+    @GetMapping("now")
+    public String now(){
+        return   LocalDateTime.now().format(DateTimeFormatter.ofPattern(properties.getDateformat()));
+
+    }
+
 }
