@@ -1,4 +1,6 @@
 package cn.itcast.order;
+
+import cn.itcast.feign.config.DefaultConfiguration;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.openfeign.EnableFeignClients;
@@ -10,7 +12,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @MapperScan("cn.itcast.order.mapper")
 @SpringBootApplication
-@EnableFeignClients
+//@EnableFeignClients(defaultConfiguration = DefaultConfiguration.class)
+@EnableFeignClients(basePackages = "cn.itcast.feign.clients")
 public class OrderServiceApplication {
 
     public static void main(String[] args) {

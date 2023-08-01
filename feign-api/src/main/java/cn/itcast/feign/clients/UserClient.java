@@ -1,7 +1,7 @@
-package cn.itcast.order.clients;
+package cn.itcast.feign.clients;
 
 
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
+import cn.itcast.feign.pojo.User;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
  * @desciption:
  */
 @FeignClient("userservice")
-public interface UserClients {
+public interface UserClient {
     @GetMapping("/user/{id}")
-    SecurityProperties.User findById(@PathVariable("id") Long id);
+    User findById(@PathVariable("id") Long id);
 }

@@ -1,14 +1,14 @@
 package cn.itcast.order.service;
 
 
-import cn.itcast.order.clients.UserClients;
+
+import cn.itcast.feign.clients.UserClient;
+import cn.itcast.feign.pojo.User;
 import cn.itcast.order.mapper.OrderMapper;
 import cn.itcast.order.pojo.Order;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 @Service
 public class OrderService {
@@ -29,11 +29,12 @@ public class OrderService {
 //        return order;
 //    }
     @Autowired
-    private UserClients userClients;
+    private UserClient userClient;
 
     public Order queryOrderById(Long orderId) {
         Order order = orderMapper.findById(orderId);
-        SecurityProperties.User user = userClients.findById(order.getUserId());
+
+        User user = userClient.findById(order.getUserId());
         order.setUser(user);
         return order;
     }
